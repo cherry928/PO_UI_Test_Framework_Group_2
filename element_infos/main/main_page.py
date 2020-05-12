@@ -14,6 +14,7 @@ class MainPage(BasePage):
         self.myzone_link = elements['myzone_link']
         self.user_menu = elements['user_menu']
         self.quit_button = elements['quit_button']
+        self.project_menu = elements['project_menu']
 
     def goto_myzone(self):  # 进入我的地盘菜单
         self.click(self.myzone_link)
@@ -27,6 +28,9 @@ class MainPage(BasePage):
 
     def click_quit_button(self):
         self.click( self.quit_button )
+
+    def goto_project(self): # 进入迭代
+        self.click(self.project_menu)
 
 if __name__ == '__main__':
     driver = Browser().get_driver()

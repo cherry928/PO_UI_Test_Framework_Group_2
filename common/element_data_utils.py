@@ -28,9 +28,9 @@ class ElementdataUtils:
 
 if __name__=="__main__":
     # s = ElementdataUtils('login_page')
-    elements = ElementdataUtils('main','main_page').get_element_info()
-    # print(elements)
-    for e in elements.values():
-        print( e )
+    elements = ElementdataUtils('iteration', 'create_new_iteration_page').get_element_info()
+    print(elements)
+    # for e in elements.values():
+    #     print( e )
 
 

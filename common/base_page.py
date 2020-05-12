@@ -50,8 +50,6 @@ class BasePage(object):
         logger.info('获取网页标题，标题是%s'%value)
         return value
 
-    #.....
-
     #元素操作封装
     # element_info = {'element_name':'用户名输入框','locator_type':'xpath','locator_value':'//input[@name="account"]','timeout': 5 }
     def find_element(self,element_info):
@@ -113,56 +111,7 @@ class BasePage(object):
         element = self.find_element(element_info)
         self.chains.click_and_hold(element).pause(senconds).release(element)
 
-
-
-    # selenium执行js
-    def execute_script(self,js_str,element_info=None):
-        if element_info:
-            self.driver.execute_script(js_str)
-        else:
-            self.driver.execute_script(js_str,None)
-
-    def delete_element_attribute(self,element_info,attribute_name):
-        element = self.find_element(element_info)
-        self.execute_script('arguments[0].removeAttribute("%s");'%attribute_name,element)
-
-
-    def delete_element_attribute(self,element_info,attribute_name):
-        element = self.find_element(element_info)
-        self.driver.execute_script('arguments[0].removeAttribute("%s");'%attribute_name,element)
-
-    def update_element_attribute(self, element_info, attribute_name,attribute_value):
-        element = self.find_element(element_info)
-        self.driver.execute_script('arguments[0].setAttribute("%s","%s");' %(attribute_name,attribute_value), element)
-
-
-
-
-    #frame == > id/name   frame元素对象
-#    思路一
-    def switch_to_frame(self,element_info):
-        element = self.find_element(element_info)
-        self.driver.switch_to.frame(element)
-
-#   思路二
-    def switch_to_frame_id_or_name(self,id_or_name):
-        self.driver.switch_to.frame(id_or_name)
-
-    def switch_to_frame_by_element(self,element_info):
-        element = self.find_element(element_info)
-        self.driver.switch_to.frame(element)
-
-#   思路三
-    def switch_to_frame(self, **element_dict): #  switch_to_frame(id='frameid')  element=element_info
-        self.wait(3)
-        if 'id' in element_dict.keys():
-            self.driver.switch_to.frame( element_dict['id'] )
-        elif 'name' in element_dict.keys():
-            self.driver.switch_to.frame(element_dict['name'])
-        elif 'element' in element_dict.keys():
-            element = self.find_element(element_dict['element'])
-            self.driver.switch_to.frame(element)
-# 弹出窗封装
+    # 弹出窗封装
     def switch_to_alert(self, action='accept', time_out=local_config.time_out):
         WebDriverWait(self.driver, time_out).until(EC.alert_is_present())
         alter = self.driver.switch_to.alert
@@ -172,27 +121,6 @@ class BasePage(object):
         elif action == 'dismiss':
             alter.dismiss()
         return alter_text
-
-
-    def get_window_handle(self):
-        return self.driver.current_window_handle
-
-    def switch_to_window_by_handle(self,window_handle):
-        self.driver.switch_to.window(window_handle)
-
-    def switch_to_window_by_title(self,title):
-        window_handles = self.driver.window_handles
-        for window_handle in window_handles:
-            if WebDriverWait(self.driver,local_config.time_out).until(EC.title_contains(title)):
-                self.driver.switch_to.window(window_handle)
-                break
-
-    def switch_to_window_by_url(self,url):
-        window_handles = self.driver.window_handles
-        for window_handle in window_handles:
-            if WebDriverWait(self.driver,local_config.time_out).until(EC.url_contains(url)):
-                self.driver.switch_to.window(window_handle)
-                break
 
     def screenshot_as_file(self):
         report_path = os.path.join( os.path.abspath(os.path.dirname(__file__)) , '..', local_config.report_path)
@@ -213,7 +141,29 @@ class BasePage(object):
         time.sleep(seconds)
 
 
+    # 清除输入框内容
+    def clear(self, element_info):
+        element = self.find_element(element_info)
+        element.clear()
+        logger.info('[%s]元素内容清除成功'%element_info['element_name'])
 
+    # 切换frame
+    def switch_to_frame(self, element_info):
+        self.wait(2)
+        element = self.find_element(element_info)
+        self.driver.switch_to.frame(element)
+        logger.info('已经切换到[%s]' % element_info['element_name'])
+
+    # 切换到默认frame
+    def switch_to_default_content(self):
+        self.driver.switch_to.default_content()
+        logger.info('切换到default_frame')
+
+    # 滑到指定元素
+    def slide_specified_element(self, element_info):
+        element = self.find_element(element_info)
+        self.driver.execute_script('arguments[0].scrollIntoView();', element)
+        logger.info('滑到指定元素：%s按钮成功'%element_info['element_name'])
 
 
 
