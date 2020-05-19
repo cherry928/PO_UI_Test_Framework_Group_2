@@ -100,6 +100,7 @@ class BasePage(object):
 
     def get_text(self,element_info):
         element = self.find_element(element_info)
+        logger.info('元素Text为：%s' % element.text)
         return element.text
 
     # 鼠标键盘封装（建议代码思路：判断操作系统类型）
@@ -164,6 +165,12 @@ class BasePage(object):
         element = self.find_element(element_info)
         self.driver.execute_script('arguments[0].scrollIntoView();', element)
         logger.info('滑到指定元素：%s按钮成功'%element_info['element_name'])
+
+    def target_locator(self):
+        self.wait(3)
+        js = "var q=document.documentElement.scrollTop=10000"
+        self.driver.execute_script(js)
+        logger.info("下拉至底部")
 
 
 
