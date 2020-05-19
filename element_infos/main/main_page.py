@@ -15,9 +15,13 @@ class MainPage(BasePage):
         self.user_menu = elements['user_menu']
         self.quit_button = elements['quit_button']
         self.project_menu = elements['project_menu']
+        self.product_menu = elements['product_menu']
 
     def goto_myzone(self):  # 进入我的地盘菜单
         self.click(self.myzone_link)
+
+    def goto_product(self):
+        self.click(self.product_menu)
 
     def get_username(self):
         value = self.get_text(self.user_menu)

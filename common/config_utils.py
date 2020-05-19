@@ -7,7 +7,7 @@ config_path = os.path.join(current_dir, "..", 'conf',"config.ini")
 class ConfigUtils(object):
     def __init__(self,path=config_path):
         self.cfg = configparser.ConfigParser()
-        self.cfg.read(path)
+        self.cfg.read(path, encoding='utf-8')
 
     @property
     def url(self):

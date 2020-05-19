@@ -1,13 +1,7 @@
-import loguru
-class People:
-    def __init__(self,dr):
-        self.driver = dr
+lista = [1,2,4,5,8]
+for i in range(len(lista)):
+	for j in range(0, len(lista)-1):
+		if lista[j]<lista[j+1]:
+			lista[j],lista[j+1] = lista[j+1], lista[j]
 
-class student(People):
-    def __init__(self,dr):
-        super().__init__(dr)
-
-xiaoming = student('brwoser')
-
-print( xiaoming.driver )
-
+print(lista)
