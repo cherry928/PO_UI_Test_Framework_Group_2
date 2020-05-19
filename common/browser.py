@@ -35,7 +35,7 @@ class Browser(object):
 
     def __get_firefox_driver(self):
         firefox_driver_path = os.path.join(self.__driver_path, 'geckodriver')
-        driver = webdriver.Chrome(executable_path=firefox_driver_path)
+        driver = webdriver.Firefox(executable_path=firefox_driver_path)
         return driver
 
     def __get_edge_driver(self):
